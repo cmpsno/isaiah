@@ -411,6 +411,7 @@ footer a:hover { color: var(--text); }
     <div class="carousel-viewport reveal" id="carousel-viewport" tabindex="0" aria-label="Featured projects carousel. Use left and right arrow keys to navigate.">
       <div class="carousel-track" id="carousel-track">
         <article class="project-card">
+          <div class="project-media"><img src="assets/thumbs/chase.gif" alt="Chase prototype Current vs Simple comparison" loading="lazy"></div>
           <p class="project-meta">Product Design · August 2025</p>
           <h3>Chase Bank App Prototype</h3>
           <p>A front-end-only mobile banking prototype exploring whether simpler navigation and clearer interaction flows reduce friction in everyday money tasks.</p>
@@ -421,6 +422,7 @@ footer a:hover { color: var(--text); }
           </div>
         </article>
         <article class="project-card">
+          <div class="project-media"><img src="assets/thumbs/chess.png" alt="Chess engine web UI playing against The Professor" loading="lazy"></div>
           <p class="project-meta">Game Dev · August 2024</p>
           <h3>Chess Engine</h3>
           <p>Built board rendering, legal move validation, special rules, and minimax-based decision logic in a rules-heavy Python project.</p>
@@ -469,6 +471,7 @@ footer a:hover { color: var(--text); }
           </div>
         </article>
         <article class="project-card">
+          <div class="project-media"><img src="assets/thumbs/infodiff.gif" alt="InfoDiff interactive diffusion timeline" loading="lazy"></div>
           <p class="project-meta">Network Science · Python</p>
           <h3>InfoDiff Model</h3>
           <p>Independent Cascade and Linear Threshold diffusion on real and synthetic graphs, synchronized on a single interactive timeline.</p>
@@ -787,7 +790,10 @@ vp.addEventListener("keydown", (e) => {
 });
 
 vp.addEventListener("pointerdown", (e) => {
-  vp.setPointerCapture(e.pointerId);
+  /* no setPointerCapture: capturing retargets the click to vp, so taps on
+     thumbnails and card links would never fire. window-level move/up
+     listeners track the drag instead; a tap (<8px) returns early so the
+     native click reaches its target. */
   vp.classList.add("dragging");
   const tracker = makeTracker();
   const startClientX = e.clientX, startX = cx, startT = performance.now();
@@ -804,9 +810,9 @@ vp.addEventListener("pointerdown", (e) => {
     setCX(x);
   };
   const up = (ev) => {
-    vp.removeEventListener("pointermove", move);
-    vp.removeEventListener("pointerup", up);
-    vp.removeEventListener("pointercancel", up);
+    window.removeEventListener("pointermove", move);
+    window.removeEventListener("pointerup", up);
+    window.removeEventListener("pointercancel", up);
     vp.classList.remove("dragging");
     if (moved < 8) return; // it was a tap — let links work
     suppressClick = true; setTimeout(() => (suppressClick = false), 50);
@@ -817,9 +823,9 @@ vp.addEventListener("pointerdown", (e) => {
     carCancel = animateSpring({ from: cx, to: snaps[carIdx], velocity: v, bounce, duration: 0.38, onUpdate: setCX });
     syncChrome();
   };
-  vp.addEventListener("pointermove", move);
-  vp.addEventListener("pointerup", up);
-  vp.addEventListener("pointercancel", up);
+  window.addEventListener("pointermove", move);
+  window.addEventListener("pointerup", up);
+  window.addEventListener("pointercancel", up);
 });
 /* a drag is not a tap: swallow the click that follows one */
 track.addEventListener("click", (e) => { if (suppressClick) { e.preventDefault(); e.stopPropagation(); } }, true);
