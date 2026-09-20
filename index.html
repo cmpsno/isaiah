@@ -274,6 +274,13 @@ section.block { padding: 4rem 0; }
 .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .tag { background: var(--chip); padding: 0.375rem 0.875rem; border-radius: 999px; font-size: 0.875rem; font-weight: 500; }
 .project-links { display: flex; gap: 1.25rem; margin-top: 0.5rem; }
+.project-media { margin: -2rem -2rem 0.5rem; border-radius: 1.5rem 1.5rem 0 0; overflow: hidden; aspect-ratio: 16/10; background: #101014; cursor: zoom-in; }
+.project-media img { width: 100%; height: 100%; object-fit: cover; display: block; user-select: none; -webkit-user-drag: none; }
+/* lightbox */
+.lightbox { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.88); display: flex; align-items: center; justify-content: center; padding: 1.25rem; opacity: 0; pointer-events: none; transition: opacity 200ms ease; }
+.lightbox.open { opacity: 1; pointer-events: auto; }
+.lightbox img { max-width: min(94vw, 72rem); max-height: 90vh; border-radius: 0.75rem; }
+.lightbox-close { position: absolute; top: 1rem; right: 1.25rem; width: 2.5rem; height: 2.5rem; border-radius: 999px; border: 0; background: rgba(255,255,255,0.14); color: #fff; font-size: 1.125rem; cursor: pointer; }
 .text-link { color: var(--blue); font-weight: 600; font-size: 1rem; text-decoration: none; letter-spacing: -0.005em; }
 .text-link:hover { text-decoration: underline; }
 .text-link:active { transform: scale(0.97); display: inline-block; }
@@ -423,6 +430,7 @@ footer a:hover { color: var(--text); }
           </div>
         </article>
         <article class="project-card">
+          <div class="project-media"><img src="assets/thumbs/vacuum-sim.png" alt="Vacuum Sim running Monte Carlo localization with LiDAR beams" loading="lazy"></div>
           <p class="project-meta">Robotics · C++</p>
           <h3>Vacuum Sim</h3>
           <p>From-scratch Monte Carlo localization for a robot vacuum — 500-particle filter, 2D LiDAR, A* coverage planning. No ROS, no SLAM framework.</p>
@@ -432,6 +440,7 @@ footer a:hover { color: var(--text); }
           </div>
         </article>
         <article class="project-card">
+          <div class="project-media"><img src="assets/thumbs/minecraft.png" alt="Minecraft Superflat voxel world with trees and mobs" loading="lazy"></div>
           <p class="project-meta">Game Dev · C++</p>
           <h3>Minecraft Superflat</h3>
           <p>C++17/OpenGL 3.3 voxel engine with chunk streaming, mob AI, survival mechanics, and a day-night cycle with propagated skylight.</p>
@@ -450,6 +459,7 @@ footer a:hover { color: var(--text); }
           </div>
         </article>
         <article class="project-card">
+          <div class="project-media"><img src="assets/thumbs/fourier-tutor.png" alt="Fourier Tutor diagnostic question on wave frequency" loading="lazy"></div>
           <p class="project-meta">AI Product · TypeScript</p>
           <h3>Fourier Tutor</h3>
           <p>Adaptive learning tool that diagnoses a learner's Fourier misconception and targets it with an interactive explanation. TypeScript monorepo.</p>
@@ -469,6 +479,7 @@ footer a:hover { color: var(--text); }
           </div>
         </article>
         <article class="project-card">
+          <div class="project-media"><img src="assets/thumbs/cadence.png" alt="Cadence typing practice with C++ code passage" loading="lazy"></div>
           <p class="project-meta">Web · JavaScript</p>
           <h3>Cadence</h3>
           <p>Dependency-free typing instrument with prose and code modes, character-level correctness, and inline results.</p>
@@ -829,6 +840,24 @@ const nav = $("#nav");
 const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
 window.addEventListener("scroll", onScroll, { passive: true });
 onScroll();
+
+// lightbox for project thumbnails
+const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lightbox-img');
+document.querySelectorAll('.project-media img').forEach((img) => {
+  img.addEventListener('click', (e) => {
+    e.stopPropagation();
+    lbImg.src = img.src; lbImg.alt = img.alt;
+    lb.classList.add('open'); document.body.style.overflow = 'hidden';
+  });
+});
+const closeLb = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+document.getElementById('lightbox-close').addEventListener('click', closeLb);
+lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('open')) closeLb(); });
 </script>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project screenshot viewer">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    <img id="lightbox-img" alt="">
+  </div>
 </body>
 </html>
