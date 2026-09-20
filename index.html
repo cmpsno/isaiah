@@ -545,6 +545,10 @@ footer a:hover { color: var(--text); }
     <div class="sheet-tags" id="sheet-tags"></div>
   </div>
 </div>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project screenshot viewer">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    <img id="lightbox-img" alt="">
+  </div>
 <script>
 /* ?theme=dark forces dark mode (preview hook) */
 if (new URLSearchParams(location.search).get('theme') === 'dark') {
@@ -861,9 +865,5 @@ document.getElementById('lightbox-close').addEventListener('click', closeLb);
 lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('open')) closeLb(); });
 </script>
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project screenshot viewer">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
-    <img id="lightbox-img" alt="">
-  </div>
 </body>
 </html>
