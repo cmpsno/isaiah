@@ -1,585 +1,752 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Isaiah Campusano</title>
-  <meta
-    name="description"
-    content="Isaiah Campusano is a product builder at JPMorgan Chase and a UGA student interested in making financial systems clearer to use."
-  >
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
-  <link rel="stylesheet" href="style.css?v=20260728-experience-dialogs">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Isaiah Campusano</title>
+<meta name="description" content="Isaiah Campusano — econ student at UGA. Prototypes, research, and game engines.">
+<meta name="theme-color" content="#f5f5f7">
+<style>
+/* ============ apple-design skill: foundations ============
+   system font first (optical sizing, tracking tables built in)
+   tracking is size-specific · leading tracks size inversely
+   hierarchy from weight + size + leading as a set           */
+:root {
+  color-scheme: light dark;
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --surface-2: #fbfbfd;
+  --text: #1d1d1f;
+  --secondary: #6e6e73;
+  --blue: #0071e3;
+  --blue-press: #0077ed;
+  --hairline: rgba(0, 0, 0, 0.12);
+  --nav-bg: rgba(251, 251, 253, 0.72);
+  --chip: rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.16), 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.05);
+  --page-pad: max(1.5rem, env(safe-area-inset-left));
+  --maxw: 64rem;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+          "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --surface: #1c1c1e;
+    --surface-2: #101012;
+    --text: #f5f5f7;
+    --secondary: #a1a1a6;
+    --blue: #2997ff;
+    --blue-press: #53acff;
+    --hairline: rgba(255, 255, 255, 0.14);
+    --nav-bg: rgba(22, 22, 23, 0.72);
+    --chip: rgba(255, 255, 255, 0.08);
+    --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font: 400 1.0625rem/1.5 var(--font); /* 17px body, comfortable leading */
+  background: var(--bg);
+  color: var(--text);
+  letter-spacing: 0; /* body stays near 0 */
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: rgba(0, 113, 227, 0.2); }
+
+/* ============ translucent chrome: content scrolls under ============ */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid transparent; /* scroll edge effect, no hard divider */
+  transition: border-color 300ms ease, box-shadow 300ms ease;
+}
+.nav.scrolled {
+  border-bottom-color: var(--hairline);
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06);
+}
+.nav-inner {
+  max-width: var(--maxw); margin: 0 auto; height: 3.25rem;
+  padding: 0 var(--page-pad);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-name { font-weight: 600; font-size: 1rem; letter-spacing: -0.01em; color: var(--text); text-decoration: none; }
+.nav-links { display: flex; gap: 1.5rem; }
+.nav-links a {
+  color: var(--secondary); text-decoration: none; font-size: 0.875rem; font-weight: 500;
+  letter-spacing: 0.01em; padding: 0.5rem 0;
+}
+.nav-links a:hover { color: var(--text); }
+@media (max-width: 560px) { .nav-links { gap: 1rem; } .nav-links a { font-size: 0.8125rem; } }
+
+main { display: block; }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--page-pad); }
+
+/* ============ type scale: tight large type, loose body ============ */
+.display {
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  line-height: 1.0;                 /* tight leading on large text */
+  letter-spacing: -0.035em;         /* negative tracking as it grows */
+  font-weight: 700;
+  font-optical-sizing: auto;
+  margin: 0;
+  text-wrap: balance;
+}
+.section-title {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  text-wrap: balance;
+}
+.section-sub { color: var(--secondary); font-size: 1.125rem; line-height: 1.45; margin: 0 0 2.5rem; max-width: 36rem; }
+.eyebrow {
+  font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.08em; /* small text: positive tracking */
+  text-transform: uppercase; color: var(--blue); margin: 0 0 0.75rem;
+}
+
+/* ============ hero ============ */
+.hero { padding: 9rem 0 5rem; }
+.hero-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 3rem; align-items: center; }
+.hero-hello { color: var(--secondary); font-size: 1.375rem; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 0.5rem; }
+.hero-lede { font-size: 1.3125rem; line-height: 1.45; color: var(--secondary); margin: 1.5rem 0 2.25rem; max-width: 30rem; letter-spacing: -0.005em; }
+.hero-lede strong { color: var(--text); font-weight: 600; }
+.hero-cta { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.portrait {
+  width: min(22rem, 100%); aspect-ratio: 1; object-fit: cover;
+  border-radius: 1.75rem; box-shadow: var(--shadow-card);
+  display: block; margin-left: auto;
+  background: var(--chip);
+}
+@media (max-width: 760px) {
+  .hero { padding-top: 7rem; }
+  .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .portrait { margin: 0; width: 12rem; }
+}
+
+/* ============ buttons: feedback on press, not release ============ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 3rem; padding: 0 1.75rem; border-radius: 999px;
+  font: 600 1.0625rem/1 var(--font); letter-spacing: -0.01em;
+  text-decoration: none; cursor: pointer; border: 0;
+  background: var(--blue); color: #fff;
+  touch-action: manipulation; user-select: none; -webkit-user-select: none;
+  transition: transform 100ms ease-out, background 150ms ease;
+}
+.btn:hover { background: var(--blue-press); }
+.btn:active { transform: scale(0.97); transition: transform 100ms ease-out; } /* instant press feedback */
+.btn-ghost { background: var(--chip); color: var(--blue); }
+.btn-ghost:hover { background: var(--chip); filter: brightness(0.96); }
+@media (prefers-color-scheme: dark) { .btn-ghost:hover { filter: brightness(1.25); } }
+
+/* ============ skills ============ */
+.skills { padding: 1rem 0 5rem; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 0.625rem; }
+.chip {
+  background: var(--surface); border: 1px solid var(--hairline);
+  padding: 0.625rem 1.125rem; border-radius: 999px;
+  font-size: 0.9375rem; font-weight: 500; letter-spacing: -0.005em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* ============ sections ============ */
+section.block { padding: 4rem 0; }
+.card-surface { background: var(--surface); border-radius: 1.5rem; box-shadow: var(--shadow-card); }
+
+/* ============ experience rows: specific labels, anchored detail ============ */
+.job-list { display: flex; flex-direction: column; border-radius: 1.5rem; overflow: hidden; box-shadow: var(--shadow-card); background: var(--surface); }
+.job-row {
+  display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 1rem; align-items: center;
+  width: 100%; text-align: left; background: var(--surface); border: 0; cursor: pointer;
+  padding: 1.375rem 1.5rem; font-family: var(--font); color: var(--text);
+  border-bottom: 1px solid var(--hairline);
+  touch-action: manipulation;
+  transition: transform 100ms ease-out, background 150ms ease;
+}
+.job-row:last-child { border-bottom: 0; }
+.job-row:hover { background: var(--surface-2); }
+.job-row:active { transform: scale(0.99); }
+.job-org { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.015em; }
+.job-role { color: var(--secondary); font-size: 1rem; }
+.job-when { color: var(--secondary); font-size: 0.9375rem; text-align: right; white-space: nowrap; }
+.job-hint { grid-column: 1 / -1; color: var(--blue); font-size: 0.9375rem; font-weight: 500; }
+.chev { color: var(--secondary); font-size: 1.25rem; line-height: 1; grid-row: span 2; }
+
+/* ============ bottom sheet: the fluid-interfaces demo ============ */
+.scrim {
+  position: fixed; inset: 0; z-index: 90; background: #000;
+  opacity: 0; will-change: opacity;
+}
+.sheet {
+  position: fixed; z-index: 91; left: 0; right: 0; bottom: 0;
+  max-width: 46rem; margin: 0 auto;
+  max-height: 86dvh; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--surface); color: var(--text);
+  border-radius: 1.25rem 1.25rem 0 0;
+  box-shadow: var(--shadow-lg);
+  will-change: transform;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.sheet-grab { padding: 0.75rem 1.5rem 0.5rem; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+.sheet-grab:active { cursor: grabbing; }
+.sheet-handle { width: 2.5rem; height: 0.3125rem; border-radius: 999px; background: var(--hairline); margin: 0 auto; }
+.sheet-body { padding: 0.5rem 1.75rem 2.5rem; }
+.sheet-kicker { font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); margin: 0 0 0.5rem; }
+.sheet-title { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 0.25rem; }
+.sheet-role { color: var(--secondary); font-size: 1.0625rem; margin: 0 0 1.75rem; }
+.sheet h4 { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--secondary); margin: 1.5rem 0 0.5rem; }
+.sheet p { margin: 0; font-size: 1.0625rem; line-height: 1.55; }
+.sheet p + p { margin-top: 0.5rem; }
+.sheet blockquote {
+  margin: 0.75rem 0 0; padding-left: 1rem; border-left: 3px solid var(--blue);
+  font-size: 1.125rem; line-height: 1.5; letter-spacing: -0.005em; font-weight: 500;
+}
+.sheet-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+.sheet-close {
+  position: sticky; top: 0.75rem; float: right;
+  width: 2.25rem; height: 2.25rem; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--chip); color: var(--secondary);
+  font-size: 1.125rem; line-height: 1; font-family: var(--font);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 100ms ease-out;
+  z-index: 2;
+}
+.sheet-close:active { transform: scale(0.9); }
+
+/* ============ project carousel: flick with momentum projection ============ */
+.carousel-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+.carousel-nav { display: flex; gap: 0.5rem; }
+.arrow-btn {
+  width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--surface); color: var(--text); box-shadow: var(--shadow-card);
+  font-size: 1.125rem; font-family: var(--font);
+  display: flex; align-items: center; justify-content: center;
+  touch-action: manipulation;
+  transition: transform 100ms ease-out, opacity 200ms ease;
+}
+.arrow-btn:active { transform: scale(0.92); }
+.arrow-btn:disabled { opacity: 0.35; cursor: default; }
+.carousel-viewport { overflow: hidden; margin: 0 calc(-1 * var(--page-pad)); padding: 0.5rem 0 1rem; cursor: grab; touch-action: pan-y; }
+.carousel-viewport.dragging { cursor: grabbing; }
+.carousel-track {
+  display: flex; gap: 1.25rem; padding: 0 var(--page-pad);
+  will-change: transform; user-select: none; -webkit-user-select: none;
+}
+.carousel-track a { user-select: none; -webkit-user-drag: none; }
+.project-card {
+  flex: 0 0 min(80vw, 34rem);
+  background: var(--surface); border-radius: 1.5rem; box-shadow: var(--shadow-card);
+  padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem;
+  transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.project-card:hover { transform: translateY(-4px); }
+.project-meta { font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--secondary); }
+.project-card h3 { font-size: 1.75rem; letter-spacing: -0.02em; line-height: 1.15; font-weight: 700; margin: 0; }
+.project-card p { color: var(--secondary); font-size: 1.0625rem; line-height: 1.5; margin: 0; flex: 1; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tag { background: var(--chip); padding: 0.375rem 0.875rem; border-radius: 999px; font-size: 0.875rem; font-weight: 500; }
+.project-links { display: flex; gap: 1.25rem; margin-top: 0.5rem; }
+.text-link { color: var(--blue); font-weight: 600; font-size: 1rem; text-decoration: none; letter-spacing: -0.005em; }
+.text-link:hover { text-decoration: underline; }
+.text-link:active { transform: scale(0.97); display: inline-block; }
+.dots { display: flex; gap: 0.5rem; justify-content: center; margin-top: 1.25rem; }
+.dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; border: 0; background: var(--hairline); cursor: pointer; padding: 0; transition: width 250ms ease, background 250ms ease; }
+.dot.active { width: 1.75rem; background: var(--text); }
+
+/* ============ writing ============ */
+.blog-card { padding: 2rem; display: grid; gap: 0.5rem; }
+.blog-card h3 { font-size: 1.5rem; letter-spacing: -0.018em; font-weight: 700; margin: 0; line-height: 1.2; }
+.blog-card p { color: var(--secondary); margin: 0; font-size: 1.0625rem; line-height: 1.5; }
+
+/* ============ contact ============ */
+.contact { text-align: left; }
+.contact .display { font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 1rem; }
+.contact-links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 2rem; }
+
+footer { padding: 3rem 0 4rem; color: var(--secondary); font-size: 0.9375rem; }
+footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+footer a { color: var(--secondary); text-decoration: none; }
+footer a:hover { color: var(--text); }
+
+/* ============ scroll reveal: gentle, interruptible, vestibular-safe ============ */
+.reveal { opacity: 0; transform: translateY(1.75rem); }
+.reveal.in { opacity: 1; transform: none; transition: opacity 600ms ease, transform 750ms cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* ============ reduced motion: cross-fade, no springs ============ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+  html { scroll-behavior: auto; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .nav { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-contrast: more) {
+  :root { --hairline: currentColor; }
+  .btn, .chip, .project-card, .job-list { border: 1px solid currentColor; }
+}
+</style>
 </head>
 <body>
-  <div class="page-shell">
-    <header class="site-header">
-      <nav id="top-nav" class="container top-nav" aria-label="Primary">
-        <a href="#hero" class="nav-logo" aria-label="Go to top">zay</a>
-        <ul class="nav-links">
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#writing">Blog</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <a href="assets/Isaiah-Campusano-Resume.pdf" class="nav-cta" target="_blank" rel="noreferrer">Resume</a>
-      </nav>
-    </header>
-
-    <main>
-      <section id="hero" class="hero-section" data-stage="final">
-        <div class="container hero-shell">
-          <div class="hero-intro" aria-hidden="true">
-            <p class="hero-intro-line hero-intro-hey">hey</p>
-            <p class="hero-intro-line hero-intro-name">whats up?</p>
-          </div>
-
-          <div class="hero-final" aria-label="Introduction">
-            <div class="hero-grid">
-              <div class="hero-copy">
-                <h1 class="hero-title">I'm Isaiah,</h1>
-                <p class="hero-summary">
-                  Student at UGA.
-                </p>
-                <div class="hero-marquee" aria-label="Tools and frameworks I use">
-                  <div class="hero-marquee-track">
-                    <div class="hero-marquee-group" aria-hidden="false">
-                      <span class="hero-tool">JavaScript</span>
-                      <span class="hero-tool">HTML/CSS</span>
-                      <span class="hero-tool">Python</span>
-                      <span class="hero-tool">Vite</span>
-                      <span class="hero-tool">Git</span>
-                      <span class="hero-tool">UX Research</span>
-                      <span class="hero-tool">Prototyping</span>
-                    </div>
-                    <div class="hero-marquee-group" aria-hidden="true">
-                      <span class="hero-tool">JavaScript</span>
-                      <span class="hero-tool">HTML/CSS</span>
-                      <span class="hero-tool">Python</span>
-                      <span class="hero-tool">Vite</span>
-                      <span class="hero-tool">Git</span>
-                      <span class="hero-tool">UX Research</span>
-                      <span class="hero-tool">Prototyping</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="hero-portrait-frame" id="hero-portrait-frame">
-                <img
-                  id="hero-portrait"
-                  class="hero-portrait"
-                  src="assets/headshot.jpg"
-                  alt="Portrait of Isaiah Campusano"
-                  loading="eager"
-                  decoding="async"
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-     <!-- ======================== EXPERIENCE ======================== -->
-<section id="experience">
-  <div class="container">
-    <div class="section-eyebrow" data-animate>
-      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-      Experience
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <a class="nav-name" href="#top">Isaiah Campusano</a>
+    <div class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#writing">Writing</a>
+      <a href="#contact">Contact</a>
     </div>
+  </div>
+</nav>
 
-    <h2 class="section-heading" data-animate>Where I've Worked</h2>
-
-    <div class="experience-preview-grid">
-      <article class="experience-preview-card" style="--experience-accent: #3b82f6;" data-animate>
-        <div class="experience-preview-header">
-          <span class="experience-preview-accent" aria-hidden="true"></span>
-          <div class="experience-preview-identity">
-            <h3>JPMorganChase</h3>
-            <p class="experience-preview-role">Product Operations Analyst</p>
-            <p class="experience-preview-date">Summer 2025</p>
-          </div>
+<main id="top">
+  <!-- ============ hero ============ -->
+  <header class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="hero-hello reveal">Hey — I'm Isaiah.</p>
+        <h1 class="display reveal">Student at UGA, building things that feel obvious.</h1>
+        <p class="hero-lede reveal">Econ student who prototypes products, runs research, and writes game engines. Currently into <strong>adaptive learning tools</strong> and the full product loop — problem, decision, build, evaluate, iterate.</p>
+        <div class="hero-cta reveal">
+          <a class="btn" href="#projects">See my work</a>
+          <a class="btn btn-ghost" href="#contact">Get in touch</a>
         </div>
-        <button
-          type="button"
-          class="experience-preview-action"
-          data-dialog-target="experience-dialog-1"
-          aria-haspopup="dialog"
-          aria-label="View experience details for JPMorganChase Product Operations Analyst"
-        >
-          <span>View experience</span>
-          <span aria-hidden="true">→</span>
-        </button>
-      </article>
-
-      <article class="experience-preview-card" style="--experience-accent: #8b5cf6;" data-animate>
-        <div class="experience-preview-header">
-          <span class="experience-preview-accent" aria-hidden="true"></span>
-          <div class="experience-preview-identity">
-            <h3>Novak Francella</h3>
-            <p class="experience-preview-role">Audit Operations Intern</p>
-            <p class="experience-preview-date">Summer 2023</p>
-          </div>
-        </div>
-        <button
-          type="button"
-          class="experience-preview-action"
-          data-dialog-target="experience-dialog-2"
-          aria-haspopup="dialog"
-          aria-label="View experience details for Novak Francella Audit Operations Intern"
-        >
-          <span>View experience</span>
-          <span aria-hidden="true">→</span>
-        </button>
-      </article>
-
-      <article class="experience-preview-card" style="--experience-accent: #10b981;" data-animate>
-        <div class="experience-preview-header">
-          <span class="experience-preview-accent" aria-hidden="true"></span>
-          <div class="experience-preview-identity">
-            <h3>Georgia Tech ISyE</h3>
-            <p class="experience-preview-role">Undergraduate Research Assistant</p>
-            <p class="experience-preview-date">Summer 2024</p>
-          </div>
-        </div>
-        <button
-          type="button"
-          class="experience-preview-action"
-          data-dialog-target="experience-dialog-3"
-          aria-haspopup="dialog"
-          aria-label="View experience details for Georgia Tech ISyE Undergraduate Research Assistant"
-        >
-          <span>View experience</span>
-          <span aria-hidden="true">→</span>
-        </button>
-      </article>
+      </div>
+      <img class="portrait reveal" src="data:image/jpeg;base64,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" alt="Portrait of Isaiah Campusano" width="400" height="400">
     </div>
+  </header>
 
-    <dialog id="experience-dialog-1" class="experience-dialog" style="--experience-accent: #3b82f6;" aria-labelledby="experience-dialog-1-title">
-      <div class="experience-dialog-panel">
-        <button type="button" class="experience-dialog-close" data-dialog-close aria-label="Close JPMorganChase experience details">
-          <span aria-hidden="true">×</span>
-        </button>
+  <!-- ============ skills ============ -->
+  <section class="skills wrap" aria-label="Skills">
+    <div class="chip-row reveal">
+      <span class="chip">JavaScript</span>
+      <span class="chip">HTML/CSS</span>
+      <span class="chip">Python</span>
+      <span class="chip">Vite</span>
+      <span class="chip">Git</span>
+      <span class="chip">UX Research</span>
+      <span class="chip">Prototyping</span>
+    </div>
+  </section>
 
-        <header class="experience-dialog-header">
-          <span class="experience-dialog-accent" aria-hidden="true"></span>
-          <div class="experience-dialog-identity">
-            <h3 id="experience-dialog-1-title">
-              JPMorganChase
-              <span class="experience-dialog-role">Product Operations Analyst</span>
-            </h3>
-            <p class="experience-dialog-date">Summer 2025</p>
-          </div>
-        </header>
+  <!-- ============ experience ============ -->
+  <section class="block wrap" id="experience">
+    <p class="eyebrow reveal">Experience</p>
+    <h2 class="section-title reveal">Where I've worked.</h2>
+    <p class="section-sub reveal">Tap a role for the full story — problem, approach, results, and what I took away.</p>
+    <div class="job-list reveal" role="list">
+      <button class="job-row" data-job="jpmc" role="listitem" aria-haspopup="dialog">
+        <span><span class="job-org">JPMorganChase</span><br><span class="job-role">Product Operations Analyst</span></span>
+        <span class="job-when">Summer 2025</span>
+        <span class="job-hint">View experience →</span>
+      </button>
+      <button class="job-row" data-job="gatech" role="listitem" aria-haspopup="dialog">
+        <span><span class="job-org">Georgia Tech ISyE</span><br><span class="job-role">Undergraduate Research Assistant</span></span>
+        <span class="job-when">Summer 2024</span>
+        <span class="job-hint">View experience →</span>
+      </button>
+      <button class="job-row" data-job="novak" role="listitem" aria-haspopup="dialog">
+        <span><span class="job-org">Novak Francella</span><br><span class="job-role">Audit Operations Intern</span></span>
+        <span class="job-when">Summer 2023</span>
+        <span class="job-hint">View experience →</span>
+      </button>
+    </div>
+  </section>
 
-        <div class="experience-dialog-content">
-          <section class="exp-section">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Problem
-            </div>
-            <p class="exp-text">Sprint updates and blocker escalation across 10+ card product teams depended heavily on manual board checks and inconsistent communication. A blocker escalation firing at 5pm EST hits a London stakeholder at 10pm — by morning, the context is stale. Different squads defining "done" differently meant DoD checks fired at different moments, making data incomparable across teams.</p>
-          </section>
-
-          <section class="exp-section">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-              Approach
-            </div>
-            <p class="exp-text">Built Jira-integrated automation workflows that triggered real-time notifications for ticket events, blockers, and sprint-state changes across the product organization.</p>
-          </section>
-
-          <section class="exp-section">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Results
-            </div>
-            <p class="exp-text">Reduced manual workflow overhead, accelerated blocker visibility, and improved sprint coordination across multiple card product squads.</p>
-          </section>
-
-          <section class="exp-section exp-learning">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-              Key Learning
-            </div>
-            <p class="exp-text exp-learning-text">"Automation is most valuable when it removes coordination friction, not just repetitive clicks."</p>
-          </section>
-
-          <div class="tags">
-            <span class="tag">Jira Align</span>
-            <span class="tag">Automation</span>
-            <span class="tag">Agile/Scrum</span>
-            <span class="tag">Process Optimization</span>
-          </div>
+  <!-- ============ projects ============ -->
+  <section class="block" id="projects">
+    <div class="wrap">
+      <div class="carousel-head">
+        <div>
+          <p class="eyebrow reveal">Projects</p>
+          <h2 class="section-title reveal">Featured work.</h2>
+          <p class="section-sub reveal" style="margin-bottom:0">Drag or flick through — it lands where your gesture is going.</p>
+        </div>
+        <div class="carousel-nav reveal">
+          <button class="arrow-btn" id="prev-btn" aria-label="Previous project">←</button>
+          <button class="arrow-btn" id="next-btn" aria-label="Next project">→</button>
         </div>
       </div>
-    </dialog>
-
-    <dialog id="experience-dialog-2" class="experience-dialog" style="--experience-accent: #8b5cf6;" aria-labelledby="experience-dialog-2-title">
-      <div class="experience-dialog-panel">
-        <button type="button" class="experience-dialog-close" data-dialog-close aria-label="Close Novak Francella experience details">
-          <span aria-hidden="true">×</span>
-        </button>
-
-        <header class="experience-dialog-header">
-          <span class="experience-dialog-accent" aria-hidden="true"></span>
-          <div class="experience-dialog-identity">
-            <h3 id="experience-dialog-2-title">
-              Novak Francella
-              <span class="experience-dialog-role">Audit Operations Intern</span>
-            </h3>
-            <p class="experience-dialog-date">Summer 2023</p>
+    </div>
+    <div class="carousel-viewport reveal" id="carousel-viewport" tabindex="0" aria-label="Featured projects carousel. Use left and right arrow keys to navigate.">
+      <div class="carousel-track" id="carousel-track">
+        <article class="project-card">
+          <p class="project-meta">Product Design · August 2025</p>
+          <h3>Chase Bank App Prototype</h3>
+          <p>A front-end-only mobile banking prototype exploring whether simpler navigation and clearer interaction flows reduce friction in everyday money tasks.</p>
+          <div class="tag-row"><span class="tag">Vite</span><span class="tag">Prototyping</span><span class="tag">UX Research</span></div>
+          <div class="project-links">
+            <a class="text-link" href="https://isaiahcampusano.github.io/chasemobile/docs/">Open Prototype →</a>
+            <a class="text-link" href="https://github.com/isaiahcampusano/chasemobile">View on GitHub →</a>
           </div>
-        </header>
-
-        <div class="experience-dialog-content">
-          <section class="exp-section">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Problem
-            </div>
-            <p class="exp-text">Data entry for identifying expenditures and collectables from client databases consumed too much of senior accountants' time in audit workflows.</p>
-          </section>
-
-          <section class="exp-section">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-              Approach
-            </div>
-            <p class="exp-text">Streamlined data collection processes to improve efficiency in identifying expenditures and collectables from client databases, reducing manual data entry burden.</p>
-          </section>
-
-          <section class="exp-section">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Results
-            </div>
-            <p class="exp-text">Assisted on 12 audits and decreased senior audit timeline by 10% across 4 clients through improved data collection efficiency.</p>
-          </section>
-
-          <section class="exp-section exp-learning">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-              Key Learnings
-            </div>
-            <p class="exp-text exp-learning-text">Excel modeling, on-site audit procedures, and the importance of clean data entry for accurate financial analysis.</p>
-          </section>
-
-          <div class="tags">
-            <span class="tag">Excel</span>
-            <span class="tag">Data Entry</span>
-            <span class="tag">Audit Procedures</span>
-            <span class="tag">Financial Analysis</span>
+        </article>
+        <article class="project-card">
+          <p class="project-meta">Game Dev · August 2024</p>
+          <h3>Chess Engine</h3>
+          <p>Built board rendering, legal move validation, special rules, and minimax-based decision logic in a rules-heavy Python project.</p>
+          <div class="tag-row"><span class="tag">Python</span><span class="tag">Minimax</span><span class="tag">Game Logic</span></div>
+          <div class="project-links">
+            <a class="text-link" href="https://github.com/isaiahcampusano/chess-engine">View on GitHub →</a>
           </div>
-        </div>
+        </article>
       </div>
-    </dialog>
+    </div>
+    <div class="dots reveal" id="dots" role="tablist" aria-label="Choose project"></div>
+  </section>
 
-    <dialog id="experience-dialog-3" class="experience-dialog" style="--experience-accent: #10b981;" aria-labelledby="experience-dialog-3-title">
-      <div class="experience-dialog-panel">
-        <button type="button" class="experience-dialog-close" data-dialog-close aria-label="Close Georgia Tech ISyE experience details">
-          <span aria-hidden="true">×</span>
-        </button>
+  <!-- ============ writing ============ -->
+  <section class="block wrap" id="writing">
+    <p class="eyebrow reveal">Thoughts &amp; Reflections</p>
+    <h2 class="section-title reveal">Dawg w/ a Blog.</h2>
+    <p class="section-sub reveal">Notes on systems, learning, and how things work.</p>
+    <article class="blog-card card-surface reveal">
+      <p class="project-meta">Tech · April 2026</p>
+      <h3>JEPA vs. Reinforcement Learning</h3>
+      <p>A short note comparing learning by modeling a world versus learning through reward, and why that distinction keeps showing up in how I think about systems.</p>
+    </article>
+  </section>
 
-        <header class="experience-dialog-header">
-          <span class="experience-dialog-accent" aria-hidden="true"></span>
-          <div class="experience-dialog-identity">
-            <h3 id="experience-dialog-3-title">
-              Georgia Tech ISyE
-              <span class="experience-dialog-role">Undergraduate Research Assistant</span>
-            </h3>
-            <p class="experience-dialog-date">Summer 2024</p>
-          </div>
-        </header>
+  <!-- ============ contact ============ -->
+  <section class="block wrap contact" id="contact">
+    <p class="eyebrow reveal">Contact</p>
+    <h2 class="display reveal">Let's ship something.</h2>
+    <p class="section-sub reveal">Open to collaborations, research, and product roles. Fastest way to reach me is email.</p>
+    <div class="contact-links reveal">
+      <a class="btn" href="mailto:inc676510@uga.edu">Email me</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/isaiah-campusano-802535266/">LinkedIn</a>
+      <a class="btn btn-ghost" href="https://github.com/isaiahcampusano">GitHub</a>
+      <a class="btn btn-ghost" href="https://isaiahcampusano.github.io/zay/assets/Isaiah-Campusano-Resume.pdf">Resume</a>
+    </div>
+  </section>
+</main>
 
-        <div class="experience-dialog-content">
-          <section class="exp-section">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Problem
-            </div>
-            <p class="exp-text">The MARTA Reach multimodal pilot program needed to understand transportation barriers and optimize access for transportation-disadvantaged persons.</p>
-          </section>
-
-          <section class="exp-section">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-              Approach
-            </div>
-            <p class="exp-text">Synthesized alternative transportation access models for Tampa, FL, analyzing work schedules, feedback patterns, and constraints for transportation-disadvantaged individuals to gain insight into barriers.</p>
-          </section>
-
-          <section class="exp-section">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Results
-            </div>
-            <p class="exp-text">Optimized business model to expand transportation access for individuals less than one mile from their MARTA stop, addressing a critical gap in Atlanta's mobility infrastructure.</p>
-          </section>
-
-          <section class="exp-section exp-learning">
-            <div class="exp-label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-              Key Learning
-            </div>
-            <p class="exp-text exp-learning-text">"A single mile keeps most Atlanta locals from working in the city, getting their kids to childcare, and accessing essential services."</p>
-          </section>
-
-          <div class="tags">
-            <span class="tag">System Analysis</span>
-            <span class="tag">Financial Modeling</span>
-            <span class="tag">Transportation Policy</span>
-            <span class="tag">Research</span>
-          </div>
-        </div>
-      </div>
-    </dialog>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Isaiah Campusano. All rights reserved.</span>
+    <a href="#top">Back to top ↑</a>
   </div>
-</section>
+</footer>
 
-      <section id="projects" class="content-section">
-        <div class="container section-stack">
-          <div class="section-intro" data-animate="heading">
-            <p class="section-label">Projects</p>
-            <h2>Featured Work</h2>
-          </div>
-
-          <div class="project-list">
-            <article
-              class="list-card project-card featured-project motion-card"
-              data-animate="project-primary"
-              data-tilt
-            >
-              <div class="card-meta">
-                <span>Product Design</span>
-                <span>August 2025</span>
-              </div>
-              <h3>Chase Bank App Prototype</h3>
-              <p class="card-copy">
-                A front-end-only mobile banking prototype exploring whether simpler navigation and clearer interaction flows reduce friction in everyday money tasks.
-              </p>
-              <div class="tag-row">
-                <span class="tag">Vite</span>
-                <span class="tag">Prototyping</span>
-                <span class="tag">UX Research</span>
-              </div>
-              <div class="project-actions">
-                <a
-                  href="https://isaiahcampusano.github.io/chasemobile/docs/"
-                  class="text-link"
-                  target="_blank"
-                  rel="noreferrer"
-                  onclick="event.stopPropagation();"
-                >
-                  Open Prototype
-                </a>
-                <a href="https://github.com/isaiahcampusano/chasemobile" class="text-link" target="_blank" rel="noreferrer">View on GitHub</a>
-              </div>
-            </article>
-
-            <article
-              class="list-card project-card motion-card"
-              data-animate="project-secondary"
-              data-tilt
-              style="--stagger: 120ms;"
-            >
-              <div class="card-meta">
-                <span>Game Dev</span>
-                <span>August 2024</span>
-              </div>
-              <h3>Chess Engine</h3>
-              <p class="card-copy">
-                Built board rendering, legal move validation, special rules, and minimax-based decision logic in a rules-heavy Python project.
-              </p>
-              <div class="tag-row">
-                <span class="tag">Python</span>
-                <span class="tag">Minimax</span>
-                <span class="tag">Game Logic</span>
-              </div>
-              <a href="https://github.com/isaiahcampusano/chess-engine" class="text-link" target="_blank" rel="noreferrer">View on GitHub</a>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="writing" class="content-section">
-        <div class="container section-stack">
-          <div class="section-intro" data-animate="heading">
-            <p class="section-label">Thoughts & Reflections</p>
-            <h2>Dawg w/ a Blog</h2>
-          </div>
-
-          <div class="writing-list">
-            <article class="list-card writing-card motion-card" data-animate="project-primary" data-tilt>
-              <div class="card-meta">
-                <span>Tech</span>
-                <span>April 2026</span>
-              </div>
-              <h3>JEPA vs. Reinforcement Learning</h3>
-              <p class="card-copy">
-                A short note comparing learning by modeling a world versus learning through reward, and why that distinction keeps showing up in how I think about systems.
-              </p>
-              <a href="#contact" class="text-link">Read More</a>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" class="content-section">
-        <div class="container section-stack">
-          <div class="section-intro" data-animate="heading">
-            <p class="section-label">Contact</p>
-            <h2>Let's Ship Something</h2>
-          </div>
-
-          <div class="contact-panel connection-panel" data-animate="contact">
-            <div class="connection-orbit" aria-hidden="true">
-              <span></span>
-            </div>
-            <p class="card-copy">Open to collab </p>
-            <div class="contact-links">
-              <a href="mailto:inc676510@uga.edu" class="contact-link" style="--link-index: 0;">Email</a>
-              <a href="assets/Isaiah-Campusano-Resume.pdf" target="_blank" rel="noreferrer" class="contact-link" style="--link-index: 1;">Resume</a>
-              <a href="https://www.linkedin.com/in/isaiah-campusano-802535266/" target="_blank" rel="noreferrer" class="contact-link" style="--link-index: 2;">LinkedIn</a>
-              <a href="https://github.com/isaiahcampusano" target="_blank" rel="noreferrer" class="contact-link" style="--link-index: 3;">GitHub</a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <p>&copy; 2026 Isaiah Campusano. All rights reserved.</p>
-        <a href="#hero" class="text-link">Back to top</a>
-      </div>
-    </footer>
+<!-- ============ bottom sheet ============ -->
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
+  <div class="sheet-grab" id="sheet-grab">
+    <div class="sheet-handle"></div>
   </div>
+  <div class="sheet-body">
+    <button class="sheet-close" id="sheet-close" aria-label="Close">✕</button>
+    <p class="sheet-kicker" id="sheet-kicker"></p>
+    <h3 class="sheet-title" id="sheet-title"></h3>
+    <p class="sheet-role" id="sheet-role"></p>
+    <div id="sheet-content"></div>
+    <div class="sheet-tags" id="sheet-tags"></div>
+  </div>
+</div>
+<script>
+"use strict";
+/* ================================================================
+   apple-design skill, translated to the web.
+   Springs are the default: interruptible, velocity-aware, and they
+   always start from the current on-screen value — never the target.
+   ================================================================ */
+const $ = (s) => document.querySelector(s);
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  <script>
-    const nav = document.getElementById("top-nav");
-    const hero = document.getElementById("hero");
-    const heroPortrait = document.getElementById("hero-portrait");
-    const animated = document.querySelectorAll("[data-animate]");
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const supportsFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+/* ---- spring engine: damping ratio + response (Apple's two params) ----
+   damping 1.0 = critically damped, no overshoot (default UI)
+   damping ~0.8 = slight bounce, ONLY after a momentum gesture      */
+function animateSpring({ from = 0, to = 0, velocity = 0, bounce = 0, duration = 0.4, onUpdate, onComplete }) {
+  if (reduceMotion) { onUpdate && onUpdate(to); onComplete && onComplete(); return () => {}; }
+  const zeta = Math.min(1, Math.max(0.2, 1 - bounce)); // damping ratio
+  const w = (2 * Math.PI) / Math.max(0.05, duration);  // natural frequency from "response"
+  const c = 2 * zeta * w;                              // damping coefficient (unit mass)
+  let x = from, v = velocity, raf = 0, last = performance.now();
+  const frame = (now) => {
+    let dt = Math.min(0.064, (now - last) / 1000); last = now;
+    const steps = Math.max(1, Math.ceil(dt / (1 / 240))); // substeps keep it stable
+    const h = dt / steps;
+    for (let i = 0; i < steps; i++) { const a = -w * w * (x - to) - c * v; v += a * h; x += v * h; }
+    onUpdate && onUpdate(x);
+    if (Math.abs(x - to) < 0.4 && Math.abs(v) < 10) { onUpdate && onUpdate(to); onComplete && onComplete(); return; }
+    raf = requestAnimationFrame(frame);
+  };
+  raf = requestAnimationFrame(frame);
+  return () => cancelAnimationFrame(raf);
+}
 
-    const setHeroStage = (stage) => {
-      if (hero) {
-        hero.dataset.stage = stage;
-      }
-    };
+/* ---- Apple's momentum projection (exponential decay, NOT v^2/2a) ---- */
+function project(velocity, decelerationRate = 0.998) {
+  return (velocity / 1000) * decelerationRate / (1 - decelerationRate);
+}
 
-    if (heroPortrait) {
-      heroPortrait.addEventListener("error", () => {
-        hero.classList.add("no-portrait");
-        document.getElementById("hero-portrait-frame")?.setAttribute("hidden", "hidden");
-      });
-    }
+/* ---- rubber-banding: progressive resistance past a boundary ---- */
+function rubberband(overshoot, dimension, constant = 0.55) {
+  return (overshoot * dimension * constant) / (dimension + constant * Math.abs(overshoot));
+}
 
-    if (hero && !prefersReducedMotion.matches) {
-      hero.classList.add("hero-sequenced");
-      setHeroStage("intro-1");
+/* ---- velocity tracker: last ~100ms of pointer history ---- */
+function makeTracker() {
+  const hist = [];
+  return {
+    push(y, t) { hist.push({ y, t }); while (hist.length && t - hist[0].t > 100) hist.shift(); },
+    velocity() {
+      if (hist.length < 2) return 0;
+      const a = hist[0], b = hist[hist.length - 1], dt = (b.t - a.t) / 1000;
+      return dt > 0 ? (b.y - a.y) / dt : 0;
+    },
+    reset() { hist.length = 0; }
+  };
+}
 
-      window.setTimeout(() => setHeroStage("intro-2"), 850);
-      window.setTimeout(() => setHeroStage("final"), 1950);
-    }
+/* ================================================================
+   bottom sheet — drag 1:1, flick to dismiss, rubber-band at top,
+   symmetric enter/exit (in from bottom, out to bottom)
+   ================================================================ */
+const JOBS = {
+  jpmc: {
+    kicker: "JPMorganChase · Summer 2025", title: "JPMorganChase", role: "Product Operations Analyst",
+    sections: [
+      ["Problem", "Sprint updates and blocker escalation across 10+ card product teams depended on manual board checks and inconsistent communication. A blocker escalation firing at 5pm EST hits a London stakeholder at 10pm — by morning, the context is stale. Different squads defining \u201cdone\u201d differently meant DoD checks fired at different moments, making data incomparable across teams."],
+      ["Approach", "Built Jira-integrated automation workflows that triggered real-time notifications for ticket events, blockers, and sprint-state changes across the product organization."],
+      ["Results", "Reduced manual workflow overhead, accelerated blocker visibility, and improved sprint coordination across multiple card product squads."]
+    ],
+    quote: "Automation is most valuable when it removes coordination friction, not just repetitive clicks.",
+    tags: ["Jira Align", "Automation", "Agile/Scrum", "Process Optimization"]
+  },
+  gatech: {
+    kicker: "Georgia Tech ISyE · Summer 2024", title: "Georgia Tech ISyE", role: "Undergraduate Research Assistant",
+    sections: [
+      ["Problem", "The MARTA Reach multimodal pilot program needed to understand transportation barriers and optimize access for transportation-disadvantaged persons."],
+      ["Approach", "Synthesized alternative transportation access models for Tampa, FL — analyzing work schedules, feedback patterns, and constraints for transportation-disadvantaged individuals to gain insight into barriers."],
+      ["Results", "Optimized the business model to expand transportation access for individuals less than one mile from their MARTA stop, addressing a critical gap in Atlanta's mobility infrastructure."]
+    ],
+    quote: "A single mile keeps most Atlanta locals from working in the city, getting their kids to childcare, and accessing essential services.",
+    tags: ["System Analysis", "Financial Modeling", "Transportation Policy", "Research"]
+  },
+  novak: {
+    kicker: "Novak Francella · Summer 2023", title: "Novak Francella", role: "Audit Operations Intern",
+    sections: [
+      ["Problem", "Data entry for identifying expenditures and collectables from client databases consumed too much of senior accountants' time in audit workflows."],
+      ["Approach", "Streamlined data collection processes to improve efficiency in identifying expenditures and collectables from client databases, reducing manual data entry burden."],
+      ["Results", "Assisted on 12 audits and decreased senior audit timeline by 10% across 4 clients through improved data collection efficiency."]
+    ],
+    quote: null,
+    learnings: "Excel modeling, on-site audit procedures, and the importance of clean data entry for accurate financial analysis.",
+    tags: ["Excel", "Data Entry", "Audit Procedures", "Financial Analysis"]
+  }
+};
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in-view");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
+const sheet = $("#sheet"), scrim = $("#scrim"), grab = $("#sheet-grab");
+let sheetY = 0, sheetH = 0, sheetOpen = false, sheetCancel = null, lastFocus = null;
 
-    animated.forEach((element) => observer.observe(element));
+function setSheetY(y) {
+  sheetY = y;
+  sheet.style.transform = `translateY(${y}px)`;
+  scrim.style.opacity = String(0.45 * (1 - Math.min(1, Math.max(0, y) / Math.max(1, sheetH))));
+}
 
-    const dialogTriggers = document.querySelectorAll("[data-dialog-target]");
-    const experienceDialogs = document.querySelectorAll(".experience-dialog");
-    let lastDialogTrigger = null;
+function openSheet(key) {
+  const j = JOBS[key]; if (!j) return;
+  $("#sheet-kicker").textContent = j.kicker;
+  $("#sheet-title").textContent = j.title;
+  $("#sheet-role").textContent = j.role;
+  $("#sheet-content").innerHTML =
+    j.sections.map(([h, p]) => `<h4>${h}</h4><p>${p}</p>`).join("") +
+    (j.quote ? `<blockquote>\u201c${j.quote}\u201d</blockquote>` : "") +
+    (j.learnings ? `<h4>Key Learnings</h4><p>${j.learnings}</p>` : "");
+  $("#sheet-tags").innerHTML = j.tags.map((t) => `<span class="tag">${t}</span>`).join("");
+  lastFocus = document.activeElement;
+  sheet.hidden = false; scrim.hidden = false;
+  document.body.style.overflow = "hidden";
+  sheetH = sheet.offsetHeight;
+  if (sheetCancel) sheetCancel();
+  if (reduceMotion) { setSheetY(0); scrim.style.opacity = "0.45"; }
+  else {
+    setSheetY(sheetH);
+    sheetCancel = animateSpring({ from: sheetH, to: 0, bounce: 0, duration: 0.35, onUpdate: setSheetY });
+  }
+  sheetOpen = true;
+  $("#sheet-close").focus();
+}
 
-    dialogTriggers.forEach((trigger) => {
-      trigger.addEventListener("click", () => {
-        const dialogId = trigger.dataset.dialogTarget;
-        const dialog = dialogId ? document.getElementById(dialogId) : null;
-
-        if (!dialog || typeof dialog.showModal !== "function" || dialog.open) {
-          return;
-        }
-
-        experienceDialogs.forEach((openDialog) => {
-          if (openDialog !== dialog && openDialog.open) {
-            openDialog.close();
-          }
-        });
-
-        lastDialogTrigger = trigger;
-        dialog.showModal();
-        document.documentElement.classList.add("dialog-open");
-        document.body.classList.add("dialog-open");
-
-        window.requestAnimationFrame(() => {
-          if (dialog.open) {
-            dialog.querySelector("[data-dialog-close]")?.focus();
-          }
-        });
-      });
+function closeSheet() {
+  if (!sheetOpen) return;
+  sheetOpen = false;
+  if (sheetCancel) sheetCancel();
+  if (reduceMotion) { setSheetY(sheetH); sheet.hidden = true; scrim.hidden = true; document.body.style.overflow = ""; }
+  else {
+    sheetCancel = animateSpring({
+      from: sheetY, to: sheetH, bounce: 0, duration: 0.3, onUpdate: setSheetY,
+      onComplete() { sheet.hidden = true; scrim.hidden = true; document.body.style.overflow = ""; }
     });
+  }
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+}
 
-    experienceDialogs.forEach((dialog) => {
-      dialog.querySelectorAll("[data-dialog-close]").forEach((closeButton) => {
-        closeButton.addEventListener("click", () => dialog.close());
-      });
+document.querySelectorAll(".job-row").forEach((b) =>
+  b.addEventListener("click", () => openSheet(b.dataset.job))
+);
+$("#sheet-close").addEventListener("click", closeSheet);
+scrim.addEventListener("click", closeSheet);
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });
 
-      dialog.addEventListener("click", (event) => {
-        if (event.target === dialog) {
-          dialog.close();
-        }
-      });
-
-      dialog.addEventListener("close", () => {
-        document.documentElement.classList.remove("dialog-open");
-        document.body.classList.remove("dialog-open");
-
-        const triggerToRestore = lastDialogTrigger;
-        lastDialogTrigger = null;
-
-        if (triggerToRestore?.isConnected) {
-          triggerToRestore.focus();
-        }
-      });
-    });
-
-    if (!prefersReducedMotion.matches && supportsFinePointer.matches) {
-      document.querySelectorAll("[data-tilt]").forEach((card) => {
-        card.addEventListener("pointermove", (event) => {
-          const bounds = card.getBoundingClientRect();
-          const x = (event.clientX - bounds.left) / bounds.width;
-          const y = (event.clientY - bounds.top) / bounds.height;
-
-          card.style.setProperty("--spot-x", `${x * 100}%`);
-          card.style.setProperty("--spot-y", `${y * 100}%`);
-          card.style.setProperty("--tilt-x", `${(0.5 - y) * 4}deg`);
-          card.style.setProperty("--tilt-y", `${(x - 0.5) * 5}deg`);
-        });
-
-        card.addEventListener("pointerleave", () => {
-          card.style.setProperty("--tilt-x", "0deg");
-          card.style.setProperty("--tilt-y", "0deg");
-        });
-      });
+/* grab & drag: 1:1 tracking, respects grab offset, velocity handoff on release */
+grab.addEventListener("pointerdown", (e) => {
+  if (!sheetOpen) return;
+  grab.setPointerCapture(e.pointerId);
+  const tracker = makeTracker();
+  const startClientY = e.clientY, startY = sheetY, startT = performance.now();
+  tracker.push(startClientY, startT);
+  if (sheetCancel) { sheetCancel(); sheetCancel = null; } // interrupt: start from live value
+  let moved = false;
+  const move = (ev) => {
+    moved = true;
+    const dy = ev.clientY - startClientY;
+    let y = startY + dy;
+    if (y < 0) y = -rubberband(-y, 240);                    // soft top boundary
+    else if (y > sheetH) y = sheetH + rubberband(y - sheetH, 240);
+    tracker.push(ev.clientY, performance.now());
+    setSheetY(y);
+  };
+  const up = (ev) => {
+    grab.removeEventListener("pointermove", move);
+    grab.removeEventListener("pointerup", up);
+    grab.removeEventListener("pointercancel", up);
+    if (!moved) return;
+    const v = tracker.velocity(); // px/s, +downward — decides commit vs reverse by SIGN
+    const projected = sheetY + project(v);
+    if (v > 150 || projected > sheetH * 0.45 || sheetY > sheetH * 0.5) closeSheet();
+    else {
+      const bounce = Math.abs(v) > 700 ? 0.2 : 0; // bounce only because a flick preceded it
+      sheetCancel = animateSpring({ from: sheetY, to: 0, velocity: Math.min(0, v), bounce, duration: 0.32, onUpdate: setSheetY });
     }
+  };
+  grab.addEventListener("pointermove", move);
+  grab.addEventListener("pointerup", up);
+  grab.addEventListener("pointercancel", up);
+});
 
-    window.addEventListener("scroll", () => {
-      nav.classList.toggle("nav-scrolled", window.scrollY > 24);
-    });
-  </script>
+/* ================================================================
+   project carousel — flick it; it projects momentum, then snaps.
+   snap target chosen from the PROJECTED endpoint, not the release point
+   ================================================================ */
+const vp = $("#carousel-viewport"), track = $("#carousel-track");
+const dotsEl = $("#dots"), prevBtn = $("#prev-btn"), nextBtn = $("#next-btn");
+let cards = [], snaps = [], minX = 0, cx = 0, carCancel = null, carIdx = 0, suppressClick = false;
+
+function layoutCarousel() {
+  cards = [...track.children];
+  const padLeft = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+  snaps = cards.map((c) => -(c.offsetLeft - padLeft));
+  minX = -(track.scrollWidth - vp.clientWidth);
+  snaps = snaps.map((s) => Math.max(minX, Math.min(0, s)));
+  buildDots();
+  goTo(carIdx, true);
+}
+function setCX(x) {
+  cx = x;
+  track.style.transform = `translateX(${x}px)`;
+}
+function nearestIdx(x) {
+  let best = 0, bd = Infinity;
+  snaps.forEach((s, i) => { const d = Math.abs(s - x); if (d < bd) { bd = d; best = i; } });
+  return best;
+}
+function buildDots() {
+  dotsEl.innerHTML = "";
+  cards.forEach((_, i) => {
+    const d = document.createElement("button");
+    d.className = "dot" + (i === carIdx ? " active" : "");
+    d.setAttribute("role", "tab");
+    d.setAttribute("aria-label", `Go to project ${i + 1}`);
+    d.addEventListener("click", () => goTo(i));
+    dotsEl.appendChild(d);
+  });
+}
+function syncChrome() {
+  [...dotsEl.children].forEach((d, i) => d.classList.toggle("active", i === carIdx));
+  prevBtn.disabled = carIdx === 0;
+  nextBtn.disabled = carIdx === cards.length - 1;
+}
+function goTo(i, instant = false) {
+  carIdx = Math.max(0, Math.min(cards.length - 1, i));
+  if (carCancel) carCancel();
+  if (instant || reduceMotion) { setCX(snaps[carIdx]); syncChrome(); return; }
+  carCancel = animateSpring({ from: cx, to: snaps[carIdx], bounce: 0, duration: 0.35, onUpdate: setCX });
+  syncChrome();
+}
+prevBtn.addEventListener("click", () => goTo(carIdx - 1));
+nextBtn.addEventListener("click", () => goTo(carIdx + 1));
+vp.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") goTo(carIdx + 1);
+  if (e.key === "ArrowLeft") goTo(carIdx - 1);
+});
+
+vp.addEventListener("pointerdown", (e) => {
+  vp.setPointerCapture(e.pointerId);
+  vp.classList.add("dragging");
+  const tracker = makeTracker();
+  const startClientX = e.clientX, startX = cx, startT = performance.now();
+  tracker.push(startClientX, startT);
+  if (carCancel) { carCancel(); carCancel = null; } // grab mid-flight: no jump, no brick wall
+  let moved = 0;
+  const move = (ev) => {
+    const dx = ev.clientX - startClientX;
+    moved = Math.max(moved, Math.abs(dx));
+    let x = startX + dx;
+    if (x > 0) x = rubberband(x, 200);                 // soft edges
+    else if (x < minX) x = minX - rubberband(minX - x, 200);
+    tracker.push(ev.clientX, performance.now());
+    setCX(x);
+  };
+  const up = (ev) => {
+    vp.removeEventListener("pointermove", move);
+    vp.removeEventListener("pointerup", up);
+    vp.removeEventListener("pointercancel", up);
+    vp.classList.remove("dragging");
+    if (moved < 8) return; // it was a tap — let links work
+    suppressClick = true; setTimeout(() => (suppressClick = false), 50);
+    const v = tracker.velocity(); // px/s along x
+    const projected = cx + project(v);
+    carIdx = Math.abs(v) > 60 ? nearestIdx(projected) : nearestIdx(cx);
+    const bounce = Math.abs(v) > 900 ? 0.2 : 0; // overshoot only on a real flick
+    carCancel = animateSpring({ from: cx, to: snaps[carIdx], velocity: v, bounce, duration: 0.38, onUpdate: setCX });
+    syncChrome();
+  };
+  vp.addEventListener("pointermove", move);
+  vp.addEventListener("pointerup", up);
+  vp.addEventListener("pointercancel", up);
+});
+/* a drag is not a tap: swallow the click that follows one */
+track.addEventListener("click", (e) => { if (suppressClick) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+window.addEventListener("resize", layoutCarousel);
+window.addEventListener("load", layoutCarousel);
+layoutCarousel();
+
+/* ================================================================
+   scroll reveal + nav edge effect
+   ================================================================ */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+}, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+const nav = $("#nav");
+const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
+window.addEventListener("scroll", onScroll, { passive: true });
+onScroll();
+</script>
 </body>
 </html>
