@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Isaiah Campusano</title>
-<meta name="description" content="Isaiah Campusano — econ student at UGA, building toward full-stack development and engineering ownership.">
+<title>Isaiah Campusano — Product & Engineering Portfolio</title>
+<meta name="description" content="Selected product and engineering work: Lengua, Kalshi, Fourier Tutor, Vacuum Sim, and more.">
 <meta name="theme-color" content="#f5f5f7">
 <style>
 /* ============ apple-design skill: foundations ============
@@ -394,6 +394,20 @@ section.block { padding: 4rem 0; }
 .dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; border: 0; background: var(--hairline); cursor: pointer; padding: 0; transition: width 250ms ease, background 250ms ease; }
 .dot.active { width: 1.75rem; background: var(--text); }
 
+/* ============ more projects ============ */
+.more-projects { margin-top: 4rem; }
+.more-list { display: grid; gap: 0.75rem; margin-top: 1.5rem; }
+.more-item {
+  display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+  padding: 1.125rem 1.5rem; border-radius: 1.25rem;
+  background: var(--surface); border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-card);
+}
+.more-name { font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text); text-decoration: none; white-space: nowrap; }
+.more-name:hover { color: var(--blue); }
+.more-item p { margin: 0; flex: 1 1 18rem; color: var(--secondary); font-size: 0.9375rem; line-height: 1.5; }
+.more-item .tag-row { margin: 0; }
+
 /* ============ writing ============ */
 .blog-card { padding: 2rem; display: grid; gap: 0.5rem; }
 .blog-card h3 { font-size: 1.5rem; letter-spacing: -0.018em; font-weight: 700; margin: 0; line-height: 1.2; }
@@ -506,7 +520,7 @@ footer a:hover { color: var(--text); }
         <div>
           <p class="eyebrow reveal">Projects</p>
           <h2 class="section-title reveal">Featured work.</h2>
-          <p class="section-sub reveal" style="margin-bottom:0">Drag or flick through — it lands where your gesture is going.</p>
+          <p class="section-sub reveal" style="margin-bottom:0">Products and systems I've shipped — drag or flick through.</p>
         </div>
         <div class="carousel-nav reveal">
           <button class="arrow-btn" id="prev-btn" aria-label="Previous project">←</button>
@@ -517,45 +531,13 @@ footer a:hover { color: var(--text); }
     <div class="carousel-viewport reveal" id="carousel-viewport" tabindex="0" aria-label="Featured projects carousel. Use left and right arrow keys to navigate.">
       <div class="carousel-track" id="carousel-track">
         <article class="project-card">
-          <div class="project-media"><img src="assets/thumbs/chase.gif" alt="Chase prototype Current vs Simple comparison" loading="lazy" decoding="async"></div>
-          <p class="project-meta">Product Design · August 2025</p>
-          <h3>Chase Bank App Prototype</h3>
-          <p>A front-end-only mobile banking prototype exploring whether simpler navigation and clearer interaction flows reduce friction in everyday money tasks.</p>
-          <div class="tag-row"><span class="tag">Vite</span><span class="tag">Prototyping</span><span class="tag">UX Research</span></div>
+          <div class="project-media"><img src="assets/thumbs/lengua.png" alt="Lengua conversation aid with Grandma and Me turn modes" loading="lazy" decoding="async"></div>
+          <p class="project-meta">AI Product · TypeScript</p>
+          <h3>Lengua</h3>
+          <p>Real-time Spanish conversation aid for my grandmother — turn-based suggestions in her Cibao dialect, formal usted register, no audio ever stored.</p>
+          <div class="tag-row"><span class="tag">TypeScript</span><span class="tag">Web Speech API</span><span class="tag">Privacy</span></div>
           <div class="project-links">
-            <a class="text-link" href="https://isaiahcampusano.github.io/chasemobile/docs/">Open Prototype →</a>
-            <a class="text-link" href="https://github.com/isaiahcampusano/chasemobile">View on GitHub →</a>
-          </div>
-        </article>
-        <article class="project-card">
-          <div class="project-media"><img src="assets/thumbs/chess.png" alt="Chess engine web UI playing against The Professor" loading="lazy" decoding="async"></div>
-          <p class="project-meta">Game Dev · August 2024</p>
-          <h3>Chess Engine</h3>
-          <p>Built board rendering, legal move validation, special rules, and minimax-based decision logic in a rules-heavy Python project.</p>
-          <div class="tag-row"><span class="tag">Python</span><span class="tag">Minimax</span><span class="tag">Game Logic</span></div>
-          <div class="project-links">
-            <a class="text-link" href="https://isaiahcampusano-chess-engine.onrender.com">Open Demo →</a>
-            <a class="text-link" href="https://github.com/isaiahcampusano/chess-engine">View on GitHub →</a>
-          </div>
-        </article>
-        <article class="project-card">
-          <div class="project-media"><img src="assets/thumbs/vacuum-sim.png" alt="Vacuum Sim running Monte Carlo localization with LiDAR beams" loading="lazy" decoding="async"></div>
-          <p class="project-meta">Robotics · C++</p>
-          <h3>Vacuum Sim</h3>
-          <p>From-scratch Monte Carlo localization for a robot vacuum — 500-particle filter, 2D LiDAR, A* coverage planning. No ROS, no SLAM framework.</p>
-          <div class="tag-row"><span class="tag">C++</span><span class="tag">Robotics</span><span class="tag">Simulation</span></div>
-          <div class="project-links">
-            <a class="text-link" href="https://github.com/isaiahcampusano/shlam-">View on GitHub →</a>
-          </div>
-        </article>
-        <article class="project-card">
-          <div class="project-media"><img src="assets/thumbs/minecraft.png" alt="Minecraft Superflat voxel world with trees and mobs" loading="lazy" decoding="async"></div>
-          <p class="project-meta">Game Dev · C++</p>
-          <h3>Minecraft Superflat</h3>
-          <p>C++17/OpenGL 3.3 voxel engine with chunk streaming, mob AI, survival mechanics, and a day-night cycle with propagated skylight.</p>
-          <div class="tag-row"><span class="tag">C++</span><span class="tag">OpenGL</span><span class="tag">Voxel</span></div>
-          <div class="project-links">
-            <a class="text-link" href="https://github.com/isaiahcampusano/minecraft">View on GitHub →</a>
+            <a class="text-link" href="https://github.com/cmpsno/lengua">View on GitHub →</a>
           </div>
         </article>
         <article class="project-card">
@@ -566,7 +548,18 @@ footer a:hover { color: var(--text); }
           <div class="tag-row"><span class="tag">Python</span><span class="tag">WebSocket</span><span class="tag">Testing</span></div>
           <div class="project-links">
             <a class="text-link" href="https://kalshi-arbitrage-dashboard.streamlit.app/">Open Demo →</a>
-            <a class="text-link" href="https://github.com/isaiahcampusano/kalshi-mispricing-arbitrage-engine">View on GitHub →</a>
+            <a class="text-link" href="https://github.com/cmpsno/kalshi-mispricing-arbitrage-engine">View on GitHub →</a>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-media"><img src="assets/thumbs/chase.gif" alt="Chase prototype Current vs Simple comparison" loading="lazy" decoding="async"></div>
+          <p class="project-meta">Product Design · August 2025</p>
+          <h3>Chase Bank App Prototype</h3>
+          <p>A front-end-only mobile banking prototype exploring whether simpler navigation and clearer interaction flows reduce friction in everyday money tasks.</p>
+          <div class="tag-row"><span class="tag">Vite</span><span class="tag">Prototyping</span><span class="tag">UX Research</span></div>
+          <div class="project-links">
+            <a class="text-link" href="https://cmpsno.github.io/chasemobile/">Open Prototype →</a>
+            <a class="text-link" href="https://github.com/cmpsno/chasemobile">View on GitHub →</a>
           </div>
         </article>
         <article class="project-card">
@@ -576,7 +569,17 @@ footer a:hover { color: var(--text); }
           <p>Adaptive learning tool that diagnoses a learner's Fourier misconception and targets it with an interactive explanation. TypeScript monorepo.</p>
           <div class="tag-row"><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">Fastify</span></div>
           <div class="project-links">
-            <a class="text-link" href="https://github.com/isaiahcampusano/fourier-tutor">View on GitHub →</a>
+            <a class="text-link" href="https://github.com/cmpsno/fourier-tutor">View on GitHub →</a>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-media"><img src="assets/thumbs/vacuum-sim.png" alt="Vacuum Sim running Monte Carlo localization with LiDAR beams" loading="lazy" decoding="async"></div>
+          <p class="project-meta">Robotics · C++</p>
+          <h3>Vacuum Sim</h3>
+          <p>From-scratch Monte Carlo localization for a robot vacuum — 500-particle filter, 2D LiDAR, A* coverage planning. No ROS, no SLAM framework.</p>
+          <div class="tag-row"><span class="tag">C++</span><span class="tag">Robotics</span><span class="tag">Simulation</span></div>
+          <div class="project-links">
+            <a class="text-link" href="https://github.com/cmpsno/shlam-">View on GitHub →</a>
           </div>
         </article>
         <article class="project-card">
@@ -586,24 +589,36 @@ footer a:hover { color: var(--text); }
           <p>Independent Cascade and Linear Threshold diffusion on real and synthetic graphs, synchronized on a single interactive timeline.</p>
           <div class="tag-row"><span class="tag">Python</span><span class="tag">Graphs</span><span class="tag">Visualization</span></div>
           <div class="project-links">
-            <a class="text-link" href="https://isaiahcampusano.github.io/infodiff-model/">Open Demo →</a>
-            <a class="text-link" href="https://github.com/isaiahcampusano/infodiff-model">View on GitHub →</a>
-          </div>
-        </article>
-        <article class="project-card">
-          <div class="project-media"><img src="assets/thumbs/cadence.png" alt="Cadence typing practice with C++ code passage" loading="lazy" decoding="async"></div>
-          <p class="project-meta">Web · JavaScript</p>
-          <h3>Cadence</h3>
-          <p>Dependency-free typing instrument with prose and code modes, character-level correctness, and inline results.</p>
-          <div class="tag-row"><span class="tag">JavaScript</span><span class="tag">No Dependencies</span><span class="tag">UX</span></div>
-          <div class="project-links">
-            <a class="text-link" href="https://isaiahcampusano.github.io/wpm-/">Open Demo →</a>
-            <a class="text-link" href="https://github.com/cmpsno/wpm">View on GitHub →</a>
+            <a class="text-link" href="https://cmpsno.github.io/infodiff-model/">Open Demo →</a>
+            <a class="text-link" href="https://github.com/cmpsno/infodiff-model">View on GitHub →</a>
           </div>
         </article>
       </div>
     </div>
     <div class="dots reveal" id="dots" role="tablist" aria-label="Choose project"></div>
+    <div class="wrap">
+      <div class="more-projects">
+        <p class="eyebrow reveal">More</p>
+        <h2 class="section-title reveal">More projects.</h2>
+        <div class="more-list reveal">
+          <div class="more-item">
+            <a class="more-name" href="https://github.com/cmpsno/chess-engine">Chess Engine</a>
+            <p>Board rendering, legal move validation, and minimax decision logic in a rules-heavy Python project.</p>
+            <div class="tag-row"><span class="tag">Python</span><span class="tag">Minimax</span></div>
+          </div>
+          <div class="more-item">
+            <a class="more-name" href="https://github.com/cmpsno/minecraft">Minecraft Superflat</a>
+            <p>C++17/OpenGL 3.3 voxel engine with chunk streaming, mob AI, and a day-night cycle.</p>
+            <div class="tag-row"><span class="tag">C++</span><span class="tag">OpenGL</span></div>
+          </div>
+          <div class="more-item">
+            <a class="more-name" href="https://github.com/cmpsno/wpm">Cadence</a>
+            <p>Dependency-free typing instrument with prose and code modes and character-level correctness.</p>
+            <div class="tag-row"><span class="tag">JavaScript</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ============ writing ============ -->
@@ -627,7 +642,7 @@ footer a:hover { color: var(--text); }
       <a class="btn" href="mailto:inc676510@uga.edu">Email me</a>
       <a class="btn btn-ghost" href="https://www.linkedin.com/in/isaiah-campusano-802535266/">LinkedIn</a>
       <a class="btn btn-ghost" href="https://github.com/isaiahcampusano">GitHub</a>
-      <a class="btn btn-ghost" href="https://isaiahcampusano.github.io/zay/assets/Isaiah-Campusano-Resume.pdf">Resume</a>
+      <a class="btn btn-ghost" href="assets/Isaiah-Campusano-Resume.pdf">Resume</a>
     </div>
   </section>
 </main>
