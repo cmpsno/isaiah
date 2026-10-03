@@ -286,11 +286,7 @@ section.block { padding: 4rem 0; }
 }
 .sheet-close:active { transform: scale(0.9); }
 
-/* ============ projects: glass bento grid (replaces carousel, 2026-10-03) ============ */
-.projects-head { margin-bottom: 2rem; }
-/* arrows hidden in the first pass — carousel JS is deprecated (see script) */
-.carousel-nav, .arrow-btn { display: none; }
-/* DEPRECATED: replaced by .bento-grid — remove after 2 weeks if no regressions
+/* ============ project carousel: flick with momentum projection ============ */
 .carousel-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
 .carousel-nav { display: flex; gap: 0.5rem; }
 .arrow-btn {
@@ -310,27 +306,12 @@ section.block { padding: 4rem 0; }
   will-change: transform; user-select: none; -webkit-user-select: none;
 }
 .carousel-track a { user-select: none; -webkit-user-drag: none; }
-*/
 
-/* --- Layout: bento grid replaces carousel track --- */
-.bento-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
-  gap: 1.5rem;
-  align-items: start;
-}
-/* feature the first card wider on large screens */
-@media (min-width: 1024px) {
-  .bento-grid > .project-card:first-child { grid-column: span 2; }
-  .bento-grid > .project-card:first-child .project-media { aspect-ratio: 16 / 9; }
-}
-@media (max-width: 768px) {
-  .bento-grid { grid-template-columns: 1fr; gap: 1.25rem; }
-  .bento-grid > .project-card:first-child { grid-column: span 1; }
-}
 /* --- Card surface: glassmorphic bento --- */
 .project-card {
   position: relative;
+  flex: 0 0 min(80vw, 34rem);
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   gap: 0.875rem;
@@ -409,13 +390,9 @@ section.block { padding: 4rem 0; }
 .text-link { color: var(--blue); font-weight: 600; font-size: 1rem; text-decoration: none; letter-spacing: -0.005em; }
 .text-link:hover { text-decoration: underline; }
 .text-link:active { transform: scale(0.97); display: inline-block; }
-/* DEPRECATED: carousel dots replaced by .bento-grid — remove after 2 weeks if no regressions */
-#dots { display: none; }
-/*
 .dots { display: flex; gap: 0.5rem; justify-content: center; margin-top: 1.25rem; }
 .dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; border: 0; background: var(--hairline); cursor: pointer; padding: 0; transition: width 250ms ease, background 250ms ease; }
 .dot.active { width: 1.75rem; background: var(--text); }
-*/
 
 /* ============ writing ============ */
 .blog-card { padding: 2rem; display: grid; gap: 0.5rem; }
@@ -525,13 +502,20 @@ footer a:hover { color: var(--text); }
   <!-- ============ projects ============ -->
   <section class="block" id="projects">
     <div class="wrap">
-      <div class="projects-head">
-        <p class="eyebrow reveal">Projects</p>
-        <h2 class="section-title reveal">Featured work.</h2>
-        <p class="section-sub reveal" style="margin-bottom:0">A selection of things I've built and shipped.</p>
+      <div class="carousel-head">
+        <div>
+          <p class="eyebrow reveal">Projects</p>
+          <h2 class="section-title reveal">Featured work.</h2>
+          <p class="section-sub reveal" style="margin-bottom:0">Drag or flick through — it lands where your gesture is going.</p>
+        </div>
+        <div class="carousel-nav reveal">
+          <button class="arrow-btn" id="prev-btn" aria-label="Previous project">←</button>
+          <button class="arrow-btn" id="next-btn" aria-label="Next project">→</button>
+        </div>
       </div>
     </div>
-    <div class="bento-grid reveal">
+    <div class="carousel-viewport reveal" id="carousel-viewport" tabindex="0" aria-label="Featured projects carousel. Use left and right arrow keys to navigate.">
+      <div class="carousel-track" id="carousel-track">
         <article class="project-card">
           <div class="project-media"><img src="assets/thumbs/chase.gif" alt="Chase prototype Current vs Simple comparison" loading="lazy" decoding="async"></div>
           <p class="project-meta">Product Design · August 2025</p>
@@ -617,6 +601,7 @@ footer a:hover { color: var(--text); }
             <a class="text-link" href="https://github.com/cmpsno/wpm">View on GitHub →</a>
           </div>
         </article>
+      </div>
     </div>
     <div class="dots reveal" id="dots" role="tablist" aria-label="Choose project"></div>
   </section>
@@ -910,60 +895,57 @@ function goTo(i, instant = false) {
   carCancel = animateSpring({ from: cx, to: snaps[carIdx], bounce: 0, duration: 0.35, onUpdate: setCX });
   syncChrome();
 }
-// DEPRECATED: carousel call sites disabled — .bento-grid replaces the carousel (2026-10-03).
-// Functions above are left defined but unreferenced for one release cycle.
-// TODO: delete after 2 weeks if no regressions. Restore: uncomment the lines below.
-// prevBtn.addEventListener("click", () => goTo(carIdx - 1));
-// nextBtn.addEventListener("click", () => goTo(carIdx + 1));
-// vp.addEventListener("keydown", (e) => {
-//   if (e.key === "ArrowRight") goTo(carIdx + 1);
-//   if (e.key === "ArrowLeft") goTo(carIdx - 1);
-// });
+prevBtn.addEventListener("click", () => goTo(carIdx - 1));
+nextBtn.addEventListener("click", () => goTo(carIdx + 1));
+vp.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") goTo(carIdx + 1);
+  if (e.key === "ArrowLeft") goTo(carIdx - 1);
+});
 
-// vp.addEventListener("pointerdown", (e) => {
-//   /* no setPointerCapture: capturing retargets the click to vp, so taps on
-//      thumbnails and card links would never fire. window-level move/up
-//      listeners track the drag instead; a tap (<8px) returns early so the
-//      native click reaches its target. */
-//   vp.classList.add("dragging");
-//   const tracker = makeTracker();
-//   const startClientX = e.clientX, startX = cx, startT = performance.now();
-//   tracker.push(startClientX, startT);
-//   if (carCancel) { carCancel(); carCancel = null; } // grab mid-flight: no jump, no brick wall
-//   let moved = 0;
-//   const move = (ev) => {
-//     const dx = ev.clientX - startClientX;
-//     moved = Math.max(moved, Math.abs(dx));
-//     let x = startX + dx;
-//     if (x > 0) x = rubberband(x, 200);                 // soft edges
-//     else if (x < minX) x = minX - rubberband(minX - x, 200);
-//     tracker.push(ev.clientX, performance.now());
-//     setCX(x);
-//   };
-//   const up = (ev) => {
-//     window.removeEventListener("pointermove", move);
-//     window.removeEventListener("pointerup", up);
-//     window.removeEventListener("pointercancel", up);
-//     vp.classList.remove("dragging");
-//     if (moved < 8) return; // it was a tap — let links work
-//     suppressClick = true; setTimeout(() => (suppressClick = false), 50);
-//     const v = tracker.velocity(); // px/s along x
-//     const projected = cx + project(v);
-//     carIdx = Math.abs(v) > 60 ? nearestIdx(projected) : nearestIdx(cx);
-//     const bounce = Math.abs(v) > 900 ? 0.2 : 0; // overshoot only on a real flick
-//     carCancel = animateSpring({ from: cx, to: snaps[carIdx], velocity: v, bounce, duration: 0.38, onUpdate: setCX });
-//     syncChrome();
-//   };
-//   window.addEventListener("pointermove", move);
-//   window.addEventListener("pointerup", up);
-//   window.addEventListener("pointercancel", up);
-// });
-// /* a drag is not a tap: swallow the click that follows one */
-// track.addEventListener("click", (e) => { if (suppressClick) { e.preventDefault(); e.stopPropagation(); } }, true);
+vp.addEventListener("pointerdown", (e) => {
+  /* no setPointerCapture: capturing retargets the click to vp, so taps on
+     thumbnails and card links would never fire. window-level move/up
+     listeners track the drag instead; a tap (<8px) returns early so the
+     native click reaches its target. */
+  vp.classList.add("dragging");
+  const tracker = makeTracker();
+  const startClientX = e.clientX, startX = cx, startT = performance.now();
+  tracker.push(startClientX, startT);
+  if (carCancel) { carCancel(); carCancel = null; } // grab mid-flight: no jump, no brick wall
+  let moved = 0;
+  const move = (ev) => {
+    const dx = ev.clientX - startClientX;
+    moved = Math.max(moved, Math.abs(dx));
+    let x = startX + dx;
+    if (x > 0) x = rubberband(x, 200);                 // soft edges
+    else if (x < minX) x = minX - rubberband(minX - x, 200);
+    tracker.push(ev.clientX, performance.now());
+    setCX(x);
+  };
+  const up = (ev) => {
+    window.removeEventListener("pointermove", move);
+    window.removeEventListener("pointerup", up);
+    window.removeEventListener("pointercancel", up);
+    vp.classList.remove("dragging");
+    if (moved < 8) return; // it was a tap — let links work
+    suppressClick = true; setTimeout(() => (suppressClick = false), 50);
+    const v = tracker.velocity(); // px/s along x
+    const projected = cx + project(v);
+    carIdx = Math.abs(v) > 60 ? nearestIdx(projected) : nearestIdx(cx);
+    const bounce = Math.abs(v) > 900 ? 0.2 : 0; // overshoot only on a real flick
+    carCancel = animateSpring({ from: cx, to: snaps[carIdx], velocity: v, bounce, duration: 0.38, onUpdate: setCX });
+    syncChrome();
+  };
+  window.addEventListener("pointermove", move);
+  window.addEventListener("pointerup", up);
+  window.addEventListener("pointercancel", up);
+});
+/* a drag is not a tap: swallow the click that follows one */
+track.addEventListener("click", (e) => { if (suppressClick) { e.preventDefault(); e.stopPropagation(); } }, true);
 
-// window.addEventListener("resize", layoutCarousel);
-// window.addEventListener("load", layoutCarousel);
-// layoutCarousel();
+window.addEventListener("resize", layoutCarousel);
+window.addEventListener("load", layoutCarousel);
+layoutCarousel();
 
 /* ================================================================
    scroll reveal + nav edge effect
